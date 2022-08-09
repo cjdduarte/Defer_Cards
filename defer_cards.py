@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-
-#Copyright(C)| 2022 Carlos Duarte - Defer Cards (Fork)
-#Based on    | Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
+#Copyright(C)| 2022 Carlos Duarte - Defer Cards
+#Fork on    | Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
 #License     | GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 #Source in   | https://github.com/cjdduarte/DeferCards
 
@@ -14,7 +13,6 @@ DEFERRED_DECK_NAME = "~Defer Cards~"
 
 # == End Config ==========================================
 ##########################################################
-
 
 import aqt, time
 import anki.sched
@@ -39,24 +37,19 @@ when the empty button is clicked.<br>
 <i>(Default behavior on the V1 Scheduler,<br>
 not a problem on the V2 or V3 Scheduler.)</i></p><br>"""
 
-
-
 ADDON_NAME = "DeferCards"
 conf = Config(ADDON_NAME)
-
 
 class DeferCards:
     def __init__(self):
         self.timeId=intTime()%100000
         addHook("Reviewer.contextMenuEvent", self.showContextMenu)
 
-
     def showContextMenu(self, r, m):
         hk=conf.get("hotkey","_")
         a=m.addAction("Defer")
         a.setShortcut(QKeySequence(hk))
         a.triggered.connect(self.defer)
-
 
     def defer(self):
         "main operations"
@@ -73,7 +66,6 @@ class DeferCards:
             mw.reset()
             tooltip(_("Card Deferred."), period=1000)
 
-
     def getDynId(self, create=True):
         "Built or select Dyn deck"
         dyn=mw.col.decks.byName(_(DEFERRED_DECK_NAME))
@@ -86,7 +78,6 @@ class DeferCards:
             showInfo("Please rename the existing %s deck first."%DEFERRED_DECK_NAME)
             return False
         return dyn['id']
-
 
     def swap(self, dynId, card):
         "Swap card info"
@@ -102,16 +93,13 @@ class DeferCards:
         card.did=dynId
         card.flushSched()
 
-
 sd=DeferCards()
-
 
 #Friendly Warning Message
 def desc(self, deck, _old):
     if deck['name'] != DEFERRED_DECK_NAME:
         return _old(self, deck)
     return DEFERRED_DECK_DESC
-
 
 #Handing keybinds Anki2.0
 def keyHandler(self, evt, _old):
@@ -125,7 +113,6 @@ def shortcutKeys(self, _old):
     ret=_old(self)
     ret.append((conf.get("hotkey","_"), sd.defer))
     return ret
-
 
 #Add button on bottom bar
 def initWeb(self):
@@ -143,7 +130,6 @@ def linkHandler(self, url, _old):
     else:
         return _old(self, url)
 
-
 #For V1 Scheduler:
 #This is necessary to keep the learning card status if user clicks empty.
 #Default is to change type1=0 new, type2=2 review
@@ -160,7 +146,6 @@ due = (case when queue in (1,3) then due else odue end),
 odue = 0, odid = 0, usn = ? where %s""" %
 lim, self.col.usn())
 
-
 # In case user changes decks in Browser or other altercations.
 # Since the Deck ID is not given, we are checking each card one by one.
 # This is a taxing process, so we are limiting it to 10 cards max.
@@ -175,7 +160,6 @@ def sd_remFromDyn(self, cids, _old):
             did=mw.col.getCard(id).did
             self.emptyDyn(did, "id = %d and odid" % id)
 
-
 #Prevent user from rebuilding this special deck
 def sd_rebuildDyn(self, did=None, _old=None):
     did = did or self.col.decks.selected()
@@ -184,7 +168,6 @@ def sd_rebuildDyn(self, did=None, _old=None):
         showWarning("Can't modify this deck.") 
         return None
     return _old(self, did)
-
 
 #Prevent user from changing deck options
 def sd_onDeckConf(self, deck=None, _old=None):

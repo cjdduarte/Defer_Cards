@@ -6,7 +6,7 @@
 
 <b>#### About:</b>
 
-Based on Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
+Fork on Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
 
 Adds a Defer Button to the Reviewer
 

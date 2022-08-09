@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright: (C) 2018-2022 cjdduarte
-# License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
+#Copyright(C)| 2022 Carlos Duarte - Defer Cards
+#Fork on    | Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
+#License     | GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+#Source in   | https://github.com/cjdduarte/DeferCards
 
-from . import main
+from . import defer_cards
