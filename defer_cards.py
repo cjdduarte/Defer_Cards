@@ -120,7 +120,7 @@ def initWeb(self):
         card = mw.reviewer.card
         if card.did==sd.getDynId(False): return
         lnkcmd="pycmd" if ANKI21 else "py.link"
-        dbtn = """<td width="50" align="right" valign="top" class="stat"><br><button title="Shortcut key: _" id="defbut" onclick="%s(&quot;deferbtn&quot;);">Defer</button></td>"""%lnkcmd
+        dbtn = """<td width="50" align="right" valign="top" class="stat"><button title="Shortcut key: _" id="defbut" onclick="%s(&quot;deferbtn&quot;);">Defer</button></td>"""%lnkcmd
         self.bottom.web.eval("""$("#middle")[0].outerHTML+='%s';"""%dbtn)
 
 #handles callback from button
