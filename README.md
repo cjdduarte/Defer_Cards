@@ -2,7 +2,7 @@
 
 <b>#### New Change:</b>
 
-<b>+ Initial Release</b>
+<b>+ Bug</b>
 
 <b>#### About:</b>
 
@@ -30,5 +30,7 @@ License | GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 Source in | https://github.com/cjdduarte/Defer_Cards/
 
 <b> #### Change Log:</b>
+
+v1.1 - 2023-01-18 - Bug
 
 v1.0 - 2022-08-09 - Initial Release
