@@ -2,7 +2,7 @@
 
 <b>#### New Change:</b>
 
-<b>+ Bug</b>
+<b>+ Bug of BR with Anki 2.1.55+</b>
 
 <b>#### About:</b>
 
@@ -31,6 +31,6 @@ Source in | https://github.com/cjdduarte/Defer_Cards/
 
 <b> #### Change Log:</b>
 
-v1.1 - 2023-01-18 - Bug
+v1.1 - 2023-01-18 - Bug of BR with Anki 2.1.55+
 
 v1.0 - 2022-08-09 - Initial Release
