@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
-#Copyright(C)| 2022 Carlos Duarte - Defer Cards
-#Fork on    | Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
-#License     | GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
-#Source in   | https://github.com/cjdduarte/DeferCards
+# Copyright(C)| 2022 Carlos Duarte - Defer Cards
+# Fork on    | Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
+# License     | GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+# Source in   | https://github.com/cjdduarte/DeferCards
 
 # == User Config =========================================
 
-# Update Note: Some settings has been moved to
-# addon manager's configuration settings.
-
-DEFERRED_DECK_NAME = "~Defer Cards~"
+DEFERRED_DECK_NAME = "~Defer Cards~"  # Nome do deck alterado
 
 # == End Config ==========================================
 ##########################################################
@@ -22,7 +19,8 @@ from aqt.reviewer import Reviewer
 from anki.hooks import addHook, wrap
 from anki.utils import intTime, ids2str
 from aqt.utils import showWarning, showInfo, tooltip
-from anki.lang import _
+# from anki.lang import _
+# import anki.schedv2
 
 from anki import version
 ANKI21 = version.startswith("2.1.")
@@ -120,8 +118,9 @@ def initWeb(self):
         card = mw.reviewer.card
         if card.did==sd.getDynId(False): return
         lnkcmd="pycmd" if ANKI21 else "py.link"
-        dbtn = """<td width="50" align="right" valign="top" class="stat"><button title="Shortcut key: _" id="defbut" onclick="%s(&quot;deferbtn&quot;);">Defer</button></td>"""%lnkcmd
-        self.bottom.web.eval("""$("#middle")[0].outerHTML+='%s';"""%dbtn)
+        dbtn = """<td width="50" class="align-right stat"><button title="Shortcut key: _" id="defbut" onclick="%s(&quot;deferbtn&quot;);">Defer</button></td>""" % lnkcmd
+        self.bottom.web.eval("""$("#middle").closest('tr').append('%s');""" % dbtn)
+        self.bottom.web.eval("""$("<style>.align-right { text-align: right; }</style>").appendTo("head");""")
 
 #handles callback from button
 def linkHandler(self, url, _old):
@@ -165,7 +164,7 @@ def sd_rebuildDyn(self, did=None, _old=None):
     did = did or self.col.decks.selected()
     dyn = mw.col.decks.get(did)
     if dyn['name'] == DEFERRED_DECK_NAME:
-        showWarning("Can't modify this deck.") 
+        showWarning("Can't modify this deck.")
         return None
     return _old(self, did)
 
@@ -174,28 +173,20 @@ def sd_onDeckConf(self, deck=None, _old=None):
     if not deck:
         deck = self.col.decks.current()
     if deck['name'] == DEFERRED_DECK_NAME:
-        showWarning("Can't modify this deck.") 
+        showWarning("Can't modify this deck.")
         return
     return _old(self, deck)
 
 Reviewer._initWeb = wrap(Reviewer._initWeb, initWeb, 'after')
 Reviewer._linkHandler = wrap(Reviewer._linkHandler, linkHandler, 'around')
+Reviewer._shortcutKeys = wrap(Reviewer._shortcutKeys, shortcutKeys, 'around')
 
 aqt.main.AnkiQt.onDeckConf = wrap(aqt.main.AnkiQt.onDeckConf, sd_onDeckConf, 'around')
 aqt.overview.Overview._desc = wrap(aqt.overview.Overview._desc, desc, 'around')
+
+'''
 anki.sched.Scheduler.emptyDyn = wrap(anki.sched.Scheduler.emptyDyn, sd_emptyDyn, 'around')
 anki.sched.Scheduler.remFromDyn = wrap(anki.sched.Scheduler.remFromDyn, sd_remFromDyn, 'around')
 anki.sched.Scheduler.rebuildDyn = wrap(anki.sched.Scheduler.rebuildDyn, sd_rebuildDyn, 'around')
-
-try:
-    # 2.1 and ccbc
-    import anki.schedv2
-    anki.schedv2.Scheduler.rebuildDyn = wrap(anki.schedv2.Scheduler.rebuildDyn, sd_rebuildDyn, 'around')
-
-    unicode = str
-
-    # 2.1 only
-    Reviewer._shortcutKeys = wrap(Reviewer._shortcutKeys, shortcutKeys, 'around')
-except:
-    # 2.0 and ccbc
-    Reviewer._keyHandler = wrap(Reviewer._keyHandler, keyHandler, 'around')
+anki.schedv2.Scheduler.rebuildDyn = wrap(anki.schedv2.Scheduler.rebuildDyn, sd_rebuildDyn, 'around')
+'''
