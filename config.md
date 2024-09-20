@@ -3,9 +3,11 @@
 ## hotkey
 Defines the keyboard shortcut used to trigger the 'Defer' action. This allows you to easily postpone reviewing a card to a later time without needing to navigate through menus.
 
-Example: If you set the hotkey to "_", pressing "_" during a review session will defer the current card.
+Example: If you set the hotkey to "\_", pressing "\_" during a review session will defer the current card.
 
 You can change this hotkey to any other key that suits your preferences.
 
 ### Warning
-Be cautious of becoming overly reliant on deferring cards, as it can hinder the effectiveness of the spaced repetition algorithm. If you find yourself abusing this feature, consider using the menu options for more intentional deferring.
+Be cautious of becoming overly reliant on deferring cards, as it can hinder the effectiveness of the spaced repetition algorithm.
+
+If you find yourself abusing this feature, consider using the menu options for more intentional deferring.

@@ -13,7 +13,7 @@ This addon allows you to defer the current card during review, sending it to a f
 
 <b>How it works:</b>
 
-During a review session, you can press the configured hotkey (default:"_") or use the "More" menu to defer the current card. The card will be sent to a filtered deck for later review.
+During a review session, you can press the configured hotkey (default:"\_") or use the "More" menu to defer the current card. The card will be sent to a filtered deck for later review.
 
 
 <b>Example:</b>
