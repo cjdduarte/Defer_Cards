@@ -7,6 +7,11 @@ Example: If you set the hotkey to "\_", pressing "\_" during a review session wi
 
 You can change this hotkey to any other key that suits your preferences.
 
+## showButton
+Controls whether the custom "Meu Botão" button should be displayed next to the "More" button during review sessions. 
+
+If set to `true`, the button will be visible and allow you to trigger the defer action by clicking on it. If set to `false`, the button will be hidden, and you will only be able to defer cards using the keyboard shortcut defined in `hotkey`.
+
 ### Warning
 Be cautious of becoming overly reliant on deferring cards, as it can hinder the effectiveness of the spaced repetition algorithm.
 

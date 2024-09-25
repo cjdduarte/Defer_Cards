@@ -21,6 +21,12 @@ from anki.utils import int_time
 from aqt.utils import showWarning, showInfo, tooltip
 from .config import Config
 
+# Tente importar PyQt6, se não, use PyQt5
+try:
+    from PyQt6.QtCore import pyqtSlot
+except ImportError:
+    from PyQt5.QtCore import pyqtSlot
+
 DEFERRED_DECK_DESC = """
 <p><i>Defer Cards.</i></p><p>
 <b>Warning:</b> On mobile, or without this addon,<br>
@@ -57,7 +63,6 @@ class DeferCards:
             self.swap(did, card)
             mw.reset()
             tooltip("Card Deferred.", period=1000)
-
 
     def getDynId(self, create=True):
         "Built or select Dyn deck"
@@ -121,3 +126,59 @@ def sd_onDeckConf(self, deck=None, _old=None):
 Reviewer._shortcutKeys = wrap(Reviewer._shortcutKeys, shortcutKeys, 'around')
 aqt.main.AnkiQt.onDeckConf = wrap(aqt.main.AnkiQt.onDeckConf, sd_onDeckConf, 'around')
 aqt.overview.Overview._desc = wrap(aqt.overview.Overview._desc, desc, 'around')
+
+# Adiciona o botão personalizado na interface do Anki
+def add_custom_button(self):
+    # Verifica se a configuração permite exibir o botão
+    if not conf.get("showButton", True):
+        return
+    
+    # Adiciona o botão usando JavaScript diretamente na estrutura HTML do Anki
+    js_code = """
+    (function() {
+        // Verifica se o botão já foi adicionado
+        if (document.getElementById('customButton')) return;
+        
+        // Cria o botão
+        var customButton = document.createElement('button');
+        customButton.id = 'customButton';
+        customButton.innerText = 'Defer';
+        customButton.title = 'Shortcut key: _';
+
+        // Define a ação do botão
+        customButton.onclick = function() { pycmd('customButtonClick'); };
+
+        // Adiciona classes de estilo para herdar o estilo dos outros botões
+        customButton.className = 'btn';
+
+        // Estiliza o botão para ser absoluto e ficar ao lado do botão "More"
+        customButton.style.position = 'absolute';
+        customButton.style.right = '90px'; // Ajuste a posição conforme necessário
+        customButton.style.top = '10px';   // Ajuste a posição conforme necessário
+
+        // Encontra o elemento do botão "More" para inserir o botão antes dele
+        var moreButton = document.querySelector("td[class='stat'] > button[title*='M']");
+        if (moreButton) {
+            moreButton.parentNode.style.position = 'relative'; // Torna o container relativo
+            moreButton.parentNode.appendChild(customButton);
+        }
+    })();
+    """
+    # Executa o JavaScript na página do Anki para adicionar o botão
+    self.bottom.web.eval(js_code)
+
+# Função personalizada que é chamada quando o botão é clicado
+@pyqtSlot()
+def on_custom_button_click():
+    sd.defer()  # Chama a função defer() do DeferCards
+
+# Função que intercepta o comando vindo do botão
+def custom_pycmd_handler(self, cmd, _old):
+    if cmd == "customButtonClick":
+        on_custom_button_click()
+    else:
+        _old(self, cmd)
+
+# Conectar o método ao Reviewer
+Reviewer._initWeb = wrap(Reviewer._initWeb, add_custom_button)
+Reviewer._linkHandler = wrap(Reviewer._linkHandler, custom_pycmd_handler, "around")
