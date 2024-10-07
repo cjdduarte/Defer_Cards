@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright(C)| 2022 Carlos Duarte - Defer Cards
-# Fork on    | Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
+# Copyright(C)| 2024 Carlos Duarte - Defer Cards
+# Fork on     | Lovac42 code, in add-on "SlackersDelight" https://github.com/lovac42/SlackersDelight
 # License     | GNU AGPL, version 3 ou posterior; http://www.gnu.org/licenses/agpl.html
 # Source in   | https://github.com/cjdduarte/DeferCards
 
@@ -81,13 +81,9 @@ class DeferCards:
         "Swap card info"
         if not card.odid:
             card.odid = card.did
-            if card.queue == 1 and mw.col.sched.name != "std2":
-                # Fix bad cards during db check
-                card.odue = mw.col.sched.today
-            else:  # new/rev cards
-                card.odue = card.due
-                card.due = -self.timeId
-                self.timeId += 1
+            card.odue = card.due
+            card.due = -self.timeId
+            self.timeId += 1
         card.did = dynId
         mw.col.update_card(card)  # Use o método atualizado
 

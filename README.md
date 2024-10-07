@@ -3,7 +3,7 @@
 
 <b>#### New Change:</b>
 
-<b>+ Reintroduced defer button. Compatible Anki 24.06.</b>
+<b>Fixed compatibility issues with Scheduler attribute in Anki 24.06+</b>
 
 <b>#### About:</b>
 
@@ -11,7 +11,7 @@ This addon allows you to defer the current card during review, sending it to a f
 
 <b>How it works:</b>
 
-During a review session, you can press the configured hotkey (default:"\_"), click the custom "Meu Botão", or use the "More" menu to defer the current card. The card will be sent to a filtered deck for later review.
+During a review session, you can press the configured hotkey (default:"\_"), click the custom "Defer", or use the "More" menu to defer the current card. The card will be sent to a filtered deck for later review.
 
 The custom button can be enabled or disabled via the configuration settings.
 
@@ -32,6 +32,7 @@ The custom button can be enabled or disabled via the configuration settings.
 <b>#### Change Log:</b>
 
 <ul>
+  <li>v1.5 - 2024-10-07 + Fixed compatibility issues with Scheduler attribute in Anki 24.06+</li>
   <li>v1.4 - 2024-09-25 + Reintroduced defer button. Compatible Anki 24.06</li>
   <li>v1.3 - 2024-09-20 + Removed defer button, replaced with hotkey/menu option</li>
   <li>v1.2 - 2023-08-21 + Compatible Anki 2.1.65+</li>
